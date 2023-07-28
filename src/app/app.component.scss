@@ -12,3 +12,22 @@ nav ul {
 nav ul li {
     padding: 5px;
 }
+
+.router-wrapper {
+    flex-grow: 1;
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.router-wrapper > router-outlet + * {
+    flex-grow: 1;
+}
+
+.content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: orange;
+}

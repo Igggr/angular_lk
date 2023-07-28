@@ -1,24 +1,27 @@
-<form>
-    <div>
-        <label for="username">login: </label>
-        <input id="username" [(ngModel)]="username" placeholder="admin" name="username">
-    </div>
+<form class="form">
+    <p>
+        <mat-form-field color="primary" class="full-width">
+            <mat-label>login: </mat-label>
+            <input matInput id="username" placeholder="admin"
+                    [(ngModel)]="username" name="username">
+        </mat-form-field>
+    </p>
 
-    <div>
-        <label for="password">password: </label>
-        <input id="password"
-            [type]="showPassword ? 'text' : 'password'"
-            [(ngModel)]="password"
-            placeholder="admin" name="password">
-    </div>
+    <p>
+        <mat-form-field color="primary" class="full-width">
+            <mat-label>password:</mat-label>
+            <input matInput id="password" placeholder="admin"
+                [type]="showPassword ? 'text' : 'password'"
+                [(ngModel)]="password" name="password">
+            <button mat-icon-button matSuffix (click)="showPassword = !showPassword"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="showPassword">
+                <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </p>
 
-    <div>
-        <label for="show">Показать пароль</label>
-        <input type="checkbox" [(ngModel)]="showPassword" name="showPassword">
-    </div>
-
-    <button (click)="login()">войти</button>
-    <button (click)="register()">зарегистрироваться</button>
+    <button mat-flat-button color="primary" (click)="login()">войти</button>
+    <button  mat-flat-button color="accent" (click)="register()">зарегистрироваться</button>
 </form>
 
 <div *ngIf="error" >{{error}}</div>

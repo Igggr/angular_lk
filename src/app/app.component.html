@@ -1,16 +1,21 @@
-<style>
-</style>
+<div class="content">
+  <nav>
+    <ul>
+      <li>
+        <a routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+        Main Page</a>
+      </li>
+      <li><a routerLink="profile" routerLinkActive="active" ariaCurrentWhenActive="page">Profile</a></li>
+      <li><a routerLink="ticket" routerLinkActive="active" ariaCurrentWhenActive="page">Ticket</a></li>
+      <li><a *ngIf="!authService.isAutenticated" routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></li>
+      <li><a *ngIf="authService.isAutenticated" (click)="authService.logout()">Logout</a></li>
+    </ul>
+  </nav>
 
-<nav>
-  <ul>
-    <li><a routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page">Main Page</a></li>
-    <li><a routerLink="profile" routerLinkActive="active" ariaCurrentWhenActive="page">Profile</a></li>
-    <li><a routerLink="ticket" routerLinkActive="active" ariaCurrentWhenActive="page">Ticket</a></li>
-    <li><a *ngIf="!authService.isAutenticated" routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></li>
-    <li><a *ngIf="authService.isAutenticated" (click)="authService.logout()">Logout</a></li>
-  </ul>
-<nav>
-
-<router-outlet></router-outlet>
+  <div class="router-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</div>
 
 
