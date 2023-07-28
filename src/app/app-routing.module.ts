@@ -6,21 +6,22 @@ import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { authGuard } from './auth.guard';
 import { ErrorComponent } from './error/error.component';
+import { LOGIN_PATH, MAIN_PAGE_PATH, PROFILE_PATH, TICKET_PATH } from './const';
 
 const routes: Routes = [
   {
-    path: '', component: MainPageComponent,
+    path: MAIN_PAGE_PATH, component: MainPageComponent,
   },
   {
-    path: 'login', component: LoginComponent,
+    path: LOGIN_PATH, component: LoginComponent,
   },
   {
-    path: 'profile',
+    path: PROFILE_PATH,
     component: ProfileComponent,
     canActivate: [authGuard],
   },
   {
-    path: 'ticket',
+    path: TICKET_PATH,
     component: TicketListComponent,
     canActivate: [authGuard],
   },

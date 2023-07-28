@@ -1,16 +1,17 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { LOGIN_PATH, REDIRECT_QUERY } from './const';
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  const authService = inject(AuthService);
 
-  if (authService.isAutenticated) {
+  if (inject(AuthService).isAutenticated) {
     return true;
   }
 
-  const url = state.url;
-  authService.redirectUrl = url;
-  inject(Router).navigate(['/login'], { queryParams: { returnUrl: url } });
+  inject(Router).navigate(
+    [`/${LOGIN_PATH}`],
+    { queryParams: { [REDIRECT_QUERY]: state.url } }
+  );
   return true;
 };

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LOGIN_ERROR, MAIN_PAGE_PATH, REDIRECT_QUERY } from '../const';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,12 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   username: string = '';
   password: string = '';
-  loginError: string = '';
-  error = {};
+  error: string = '';
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -23,16 +24,17 @@ export class LoginComponent {
   }
 
   login() {
-    console.log('trying to login');
-
     this.authService.login(this.username, this.password)
       .subscribe((data) => {
-        console.log('data', data);
         if (this.authService.isAutenticated) {
-          const redirect = this.authService.redirectUrl ?? '/';
-          this.router.navigate([redirect]);
+          console.log('sucessefully authenticated');
+          console.log(data)
+
+          const redirectTo = this.route.snapshot.queryParamMap.get(REDIRECT_QUERY)
+            ?? MAIN_PAGE_PATH;
+          this.router.navigate([redirectTo]);
         } else {
-          this.loginError = 'Username or password is incorrect.';
+          this.error = LOGIN_ERROR;
         }
       },
         error => this.error = error

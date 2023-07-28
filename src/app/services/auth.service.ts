@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
+import { LOGIN_PATH, REGISTRATION_PATH, BACKEND_URL } from '../const';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  backendUrl = 'localhost:3000';
-  redirectUrl: string = '';
-
   constructor(
     private readonly client: HttpClient,
   ) { }
   
   login(username: string, password: string) {
-    return this.client.post<any>(`${this.backendUrl}/login`, {
+    return this.client.post<any>(`${BACKEND_URL}/${LOGIN_PATH}`, {
       username,
       password,
     }).pipe(
@@ -30,7 +28,7 @@ export class AuthService {
   }
 
   register(username: string, password: string) {
-    return this.client.post<any>(`${this.backendUrl}/register`, {
+    return this.client.post<any>(`${BACKEND_URL}/${REGISTRATION_PATH}`, {
       username, password
     })
   }
@@ -39,7 +37,8 @@ export class AuthService {
     if (error.error instanceof ErrorEvent) {
       return throwError(`Client-side or network error occurred ${error.error.message}`);
     } else {
-      return throwError(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+      console.log(error)
+      return throwError(error.error.message);
     }
   }
 

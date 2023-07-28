@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
 import { Observable, delay, dematerialize, materialize, of, throwError } from 'rxjs';
+import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH } from '../const';
 
 const usersKey = 'registred-users';
 let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
@@ -12,10 +13,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         console.log(`Intercept [${method}] ${url}`);
 
         switch (true) {
-            case url.endsWith('/register') && method === 'POST':
+            case url.endsWith(`/${REGISTRATION_PATH}`) && method === 'POST':
                 return register();
 
-            case url.endsWith('/login') && method === 'POST':
+            case url.endsWith(`/${LOGIN_PATH}`) && method === 'POST':
                 return login();
 
             default:
@@ -28,7 +29,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
-            if (!user) return error('Username or password is incorrect');
+            if (!user) return error(LOGIN_ERROR);
             return ok({
                 ...user,
                 password: undefined,
