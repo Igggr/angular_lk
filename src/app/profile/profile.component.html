@@ -1,1 +1,21 @@
-<p>profile works!</p>
+<p>имя</p>
+<p>фамилия</p>
+дата рождения
+
+<mat-form-field>
+    <mat-label>Дата рождения</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="birthDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Выберите город</mat-label>
+    <mat-select [(value)]="city">
+        <mat-option *ngFor="let city of CITIES" value="{{city}}">
+            {{city}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+список тикетов
+список обращений в техподдержку

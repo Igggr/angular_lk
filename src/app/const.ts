@@ -10,3 +10,8 @@ export const BACKEND_URL = 'localhost:3000';
 export const LOGIN_ERROR = 'Username or password is incorrect.';
 
 export const REDIRECT_QUERY = 'returnUrl';
+
+export const CITIES = ['Moscow', 'Saint-Peterburg', 'Sochi', 'Krasnodar'];
+
+// localStorage keys
+export const CURRENT_USER = 'current_user';

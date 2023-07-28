@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
-import { LOGIN_PATH, REGISTRATION_PATH, BACKEND_URL } from '../const';
+import { LOGIN_PATH, REGISTRATION_PATH, BACKEND_URL, CURRENT_USER } from '../const';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthService {
     }).pipe(
       map((user) => {
         if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem(CURRENT_USER, JSON.stringify(user));
         }
         return user;
       }),
@@ -44,18 +44,18 @@ export class AuthService {
 
   logout() {
     console.log('log out');
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(CURRENT_USER);
   }
 
   get isAutenticated() {
-    if (localStorage.getItem('currentUser')) {
+    if (localStorage.getItem(CURRENT_USER)) {
       return true;
     }
     return false;
   }
 
   getAuthorizationToken() {
-    const user = localStorage.getItem('currentUser');
+    const user = localStorage.getItem(CURRENT_USER);
     if (user === null) {
       return;
     }
