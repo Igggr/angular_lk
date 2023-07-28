@@ -1,12 +1,20 @@
 <form>
     <div>
-        <label for="name">login: </label>
-        <input id="name" [(ngModel)]="username" placeholder="admin" name="username">
+        <label for="username">login: </label>
+        <input id="username" [(ngModel)]="username" placeholder="admin" name="username">
     </div>
 
     <div>
-        <label for="name">password: </label>
-        <input id="name" [(ngModel)]="password" placeholder="admin" name="password">
+        <label for="password">password: </label>
+        <input id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            placeholder="admin" name="password">
+    </div>
+
+    <div>
+        <label for="show">Показать пароль</label>
+        <input type="checkbox" [(ngModel)]="showPassword" name="showPassword">
     </div>
 
     <button (click)="login()">войти</button>

@@ -12,6 +12,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   error: string = '';
+  showPassword = false;
 
   constructor(
     private readonly authService: AuthService,

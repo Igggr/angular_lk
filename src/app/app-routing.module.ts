@@ -10,7 +10,9 @@ import { LOGIN_PATH, MAIN_PAGE_PATH, PROFILE_PATH, TICKET_PATH } from './const';
 
 const routes: Routes = [
   {
-    path: MAIN_PAGE_PATH, component: MainPageComponent,
+    path: MAIN_PAGE_PATH,
+    component: MainPageComponent,
+    canActivate: [authGuard],
   },
   {
     path: LOGIN_PATH, component: LoginComponent,
