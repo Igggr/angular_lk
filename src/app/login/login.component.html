@@ -1,1 +1,17 @@
-<p>login works!</p>
+<form>
+    <div>
+        <label for="name">login: </label>
+        <input id="name" [(ngModel)]="username" placeholder="admin" name="username">
+    </div>
+
+    <div>
+        <label for="name">password: </label>
+        <input id="name" [(ngModel)]="password" placeholder="admin" name="password">
+    </div>
+
+    <button (click)="login()">войти</button>
+    <button (click)="register()">зарегистрироваться</button>
+</form>
+
+<div *ngIf="loginError" >{{loginError}}</div>
+<div *ngIf="error">{{error}}</div>

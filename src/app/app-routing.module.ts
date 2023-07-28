@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { authGuard } from './auth.guard';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
@@ -13,10 +15,18 @@ const routes: Routes = [
     path: 'login', component: LoginComponent,
   },
   {
-    path: 'profile', component: ProfileComponent,
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'ticket', component: TicketListComponent,
+    path: 'ticket',
+    component: TicketListComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    component: ErrorComponent,
   }
 ];
 
