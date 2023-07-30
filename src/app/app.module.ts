@@ -10,6 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +22,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { fakeBackendProvider } from './mock/fake_backend';
 import { ErrorComponent } from './error/error.component';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     LoginComponent,
     ProfileComponent,
     TicketListComponent,
-    ErrorComponent
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSnackBarModule,
   ],
   providers: [
     fakeBackendProvider,
