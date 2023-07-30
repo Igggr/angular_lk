@@ -16,12 +16,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainPageComponent } from './main-page/main-page.component';
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
-import { TicketListComponent } from './ticket-list/ticket-list.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { TicketListComponent } from './components/ticket-list/ticket-list.component';
 import { fakeBackendProvider } from './mock/fake_backend';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [

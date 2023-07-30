@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LOGIN_ERROR, MAIN_PAGE_PATH, REDIRECT_QUERY } from '../const';
+import { LOGIN_ERROR, MAIN_PAGE_PATH, REDIRECT_QUERY } from '../../const';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -9,9 +9,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  username: string = '';
-  password: string = '';
+export class LoginComponent implements OnInit {
+  username = '';
+  password = '';
   showPassword = false;
 
   constructor(
@@ -28,7 +28,7 @@ export class LoginComponent {
   login() {
     this.authService.login(this.username, this.password)
       .subscribe({
-        next: (_) => {
+        next: () => {
           if (this.authService.isAutenticated) {
             const redirectTo = this.route.snapshot.queryParamMap.get(REDIRECT_QUERY)
               ?? MAIN_PAGE_PATH;

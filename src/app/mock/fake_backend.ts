@@ -5,11 +5,11 @@ import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH, USER_PATH } from '../const'
 import { User } from '../common-types/user';
 
 const usersKey = 'registred-users';
-let users: User[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
+const users: User[] = JSON.parse(localStorage.getItem(usersKey) ?? '[]');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         const { url, method, body } = request;
         console.log(`Intercept [${method}] ${url}`);
 
@@ -108,7 +108,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return without_password;
         }
 
-        function ok(body?: any) {
+        function ok(body?: unknown) {
             return of(new HttpResponse({ status: 200, body }))
                 .pipe(delay(500));
         }

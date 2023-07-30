@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
 import { LOGIN_PATH, REGISTRATION_PATH, BACKEND_URL, CURRENT_USER } from '../const';
-import { User } from '../common-types/user';
+import { UserInfo } from '../common-types/user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,11 @@ export class AuthService {
   ) { }
   
   login(username: string, password: string) {
-    return this.client.post<any>(`${BACKEND_URL}/${LOGIN_PATH}`, {
+    return this.client.post<UserInfo>(`${BACKEND_URL}/${LOGIN_PATH}`, {
       username,
       password,
     }).pipe(
-      map((user: User) => {
+      map((user) => {
         if (user && user.jwt) {
           localStorage.setItem(CURRENT_USER, JSON.stringify(user));
         }
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   register(username: string, password: string) {
-    return this.client.post<any>(`${BACKEND_URL}/${REGISTRATION_PATH}`, {
+    return this.client.post<UserInfo>(`${BACKEND_URL}/${REGISTRATION_PATH}`, {
       username, password
     })
   }

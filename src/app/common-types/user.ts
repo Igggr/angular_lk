@@ -11,3 +11,5 @@ export type User = {
     city: string;
     tickets: Ticket[];
 };
+
+export type UserInfo = Omit<User, 'password'>;

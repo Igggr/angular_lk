@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BACKEND_URL, CITIES, CURRENT_USER, USER_PATH } from '../const';
-import { User } from '../common-types/user';
+import { BACKEND_URL, CITIES, CURRENT_USER, USER_PATH } from '../../const';
+import { UserInfo } from '../../common-types/user';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,14 +9,14 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   readonly CITIES = CITIES;
 
-  username: string = '';
-  jwt: string = '';
-  name: string = '';
-  surname: string = '';
-  city: string = '';
+  username = '';
+  jwt = '';
+  name = '';
+  surname = '';
+  city = '';
   birthDate = new FormControl(new Date());
   tickets = [];
 
@@ -25,25 +25,25 @@ export class ProfileComponent {
   ngOnInit() {
     const val = localStorage.getItem(CURRENT_USER);
     if (val) {
-      const user: Omit<User, 'password'> = JSON.parse(val);
+      const user: UserInfo = JSON.parse(val);
       this.setFormValues(user);
     }
   }
 
   updateUserInfo() {
-    this.http.patch(`${BACKEND_URL}/${USER_PATH}`, {
+    this.http.patch<UserInfo>(`${BACKEND_URL}/${USER_PATH}`, {
       jwt: this.jwt,
       name: this.name,
       surname: this.surname,
       city: this.city,
       birthDate: this.birthDate.value,
     }).subscribe((data) => {
-      this.setFormValues(data as Omit<User, 'password'>);
+      this.setFormValues(data);
       console.log('updated, get', data)
     })
   }
 
-  setFormValues(user: Omit<User, 'password'>) {
+  setFormValues(user: UserInfo) {
     this.username = user.username;
     this.jwt = user.jwt;
     this.name = user.name;
