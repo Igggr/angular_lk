@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
 import { LOGIN_PATH, REGISTRATION_PATH, BACKEND_URL, CURRENT_USER } from '../const';
+import { User } from '../common-types/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class AuthService {
       username,
       password,
     }).pipe(
-      map((user) => {
-        if (user && user.token) {
+      map((user: User) => {
+        if (user && user.jwt) {
           localStorage.setItem(CURRENT_USER, JSON.stringify(user));
         }
         return user;

@@ -20,8 +20,10 @@
         </mat-form-field>
     </p>
 
-    <button mat-flat-button color="primary" (click)="login()">войти</button>
-    <button  mat-flat-button color="accent" (click)="register()">зарегистрироваться</button>
+    <div class="full-width button-row">
+        <button mat-flat-button color="primary" (click)="login()">войти</button>
+        <button  mat-flat-button color="accent" (click)="register()">зарегистрироваться</button>
+    </div>
 </form>
 
 <div *ngIf="error" >{{error}}</div>
