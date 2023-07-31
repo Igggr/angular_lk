@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Ticket } from 'src/app/common-types/ticket';
 import { UserInfo } from 'src/app/common-types/user';
 import { BACKEND_URL, CURRENT_USER, TICKET_PATH } from 'src/app/const';
@@ -10,9 +10,10 @@ import { BACKEND_URL, CURRENT_USER, TICKET_PATH } from 'src/app/const';
   styleUrls: ['./ticket-list.component.scss']
 })
 export class TicketListComponent implements OnInit {
+  @Input() jwt = '';
   tickets: Ticket[] = [];
 
-  constructor() {}
+  constructor(private readonly http: HttpClient) {}
   
   ngOnInit() {
     const user: string | null = localStorage.getItem(CURRENT_USER);
@@ -21,5 +22,19 @@ export class TicketListComponent implements OnInit {
     }
     const currentUser: UserInfo = JSON.parse(user);
     this.tickets = currentUser.tickets;
+    this.jwt = currentUser.jwt;
+  }
+
+  setTicketStatus(event: { ticketId: number, status: boolean }) {
+    console.log(`set ticket # ${event.ticketId} status as ${event.status ? 'open' : 'closed'}`)
+    this.http.put<Ticket[]>(`${BACKEND_URL}/${TICKET_PATH}`, {
+      id: event.ticketId,
+      status: event.status,
+      jwt: this.jwt
+    }).subscribe({
+      next: (data) => {
+        this.tickets = data;
+      }
+    });
   }
 }

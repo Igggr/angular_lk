@@ -31,7 +31,15 @@ export class AuthService {
   register(username: string, password: string) {
     return this.http.post<UserInfo>(`${BACKEND_URL}/${REGISTRATION_PATH}`, {
       username, password
-    })
+    }).pipe(
+      map((user) => {
+        if (user && user.jwt) {
+          localStorage.setItem(CURRENT_USER, JSON.stringify(user));
+        }
+        return user;
+      }),
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse) {

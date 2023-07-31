@@ -14,8 +14,8 @@
 
     <mat-card-actions>
         <button mat-flat-button [disabled]="ticket.isOpened" color="primary"
-            (click)="reopenTicket(ticket.id)">REOPEN</button>
+            (click)="setTicketStatus(ticket.id, true)">REOPEN</button>
         <button mat-flat-button [disabled]="!ticket.isOpened" color="warn"
-            (click)="closeTicket(ticket.id)">CLOSE</button>
+            (click)="setTicketStatus(ticket.id, false)">CLOSE</button>
     </mat-card-actions>
 </mat-card>

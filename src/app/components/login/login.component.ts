@@ -42,9 +42,13 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    console.log('registration')
     this.authService.register(this.username, this.password)
       .subscribe({
+        next: () => {
+          if (this.authService.isAutenticated) {
+            this.router.navigate([MAIN_PAGE_PATH]);
+          }
+        },
         error: (error) => this.openSnackBar(error.error.message),
       })
 
@@ -58,7 +62,6 @@ export class LoginComponent implements OnInit {
         duration: durationInSeconds * 1000,
         panelClass: ['alert'],
       },
-
     )
   }
 }

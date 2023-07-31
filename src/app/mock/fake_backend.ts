@@ -1,13 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
 import { Observable, delay, dematerialize, materialize, of, throwError } from 'rxjs';
-import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH, TICKET_PATH, TICKET_REOPEN_PATH, USER_PATH } from '../const';
+import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH, TICKET_PATH, USER_PATH } from '../const';
 import { User } from '../common-types/user';
 import { Ticket } from '../common-types/ticket';
 import { loremContent, loremTitles } from './lorem';
 
 const usersKey = 'registred-users';
 const users: User[] = JSON.parse(localStorage.getItem(usersKey) ?? '[]');
+
+if (users.length === 0) {
+    users.push({
+        id: 1,
+        username: 'admin',
+        password: 'admin',
+        jwt: fakeJWT(),
+        tickets: createFakeTickets(),
+        name: '',
+        surname: '',
+        birthDate: '',
+        city: ''
+    });
+}
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -28,11 +42,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             case url.endsWith(`/${USER_PATH}`) && method === 'PATCH':
                 return updateUser();
             
-            case url.endsWith(`/${TICKET_PATH}`) && method === 'DELETE':
-                return closeTicket();
+            case url.endsWith(`/${TICKET_PATH}`) && method === 'PUT':
+                return setTicketStatus();
             
-            case url.endsWith(`${TICKET_REOPEN_PATH}`) && method === 'POST':
-                return reopenTicket();
 
             default:
                 // не перехваченные запросы - действительно обрабатывай
@@ -59,7 +71,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const user: User = {
                 id: users.length ? Math.max(...users.map(x => x.id)) + 1 : 1,
-                jwt: Math.random().toString(36).substring(2),
+                jwt: fakeJWT(),
                 username,
                 password,
                 name: '',
@@ -111,7 +123,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
         }
 
-        function closeTicket() {
+        function setTicketStatus() {
             console.log(`closing ticket ${body.id}`);
 
             const user = authenticate(body.jwt);
@@ -122,28 +134,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 if (!ticket) {
                     return error('Ошибка, такого тикета нет в БД');
                 }
-                ticket.isOpened = false;
+                ticket.isOpened = body.status;
                 localStorage.setItem(usersKey, JSON.stringify(users));
+                localStorage.setItem('current_user', JSON.stringify(user));
                 return ok(user.tickets);
             }
         }
 
-        function reopenTicket() {
-            console.log(`reopenning ticket ${body.id}`);
-
-            const user = authenticate(body.jwt);
-            if (!user) {
-                return error('JWT is incorrect');
-            } else {
-                const ticket = user.tickets.find((t) => t.id === body.id);
-                if (!ticket) {
-                    return error('Ошибка, такого тикета нет в БД');
-                }
-                ticket.isOpened = true;
-                localStorage.setItem(usersKey, JSON.stringify(users));
-                return ok(user.tickets);
-            }
-        }
 
         function withoutPassword(user: User) {
             const { password: _, ...without_password } = user;
@@ -169,7 +166,6 @@ export const fakeBackendProvider = {
     useClass: FakeBackendInterceptor,
     multi: true
 } as const;
-
 
 function ticketFactory() {
     let number = 1;
@@ -198,4 +194,8 @@ function createFakeTickets(): Ticket[] {
     const ammount = Math.floor(Math.random() * 40);
     const factory = ticketFactory();
     return Array.from({ length: ammount }).map(() => factory());
+}
+
+function fakeJWT() {
+    return Math.random().toString(36).substring(2);
 }

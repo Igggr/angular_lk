@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Ticket } from 'src/app/common-types/ticket';
-import { BACKEND_URL, TICKET_PATH, TICKET_REOPEN_PATH } from 'src/app/const';
+import { BACKEND_URL, TICKET_PATH } from 'src/app/const';
 
 @Component({
   selector: 'app-ticket-card',
@@ -10,17 +10,9 @@ import { BACKEND_URL, TICKET_PATH, TICKET_REOPEN_PATH } from 'src/app/const';
 })
 export class TicketCardComponent {
   @Input() ticket!: Ticket;
+  @Output() ticketStatus = new EventEmitter();
 
-  constructor(private readonly http: HttpClient) {}
-  
-  closeTicket(id: number) {
-    this.http.delete(`${BACKEND_URL}/${TICKET_PATH}/`, {
-      body: { id: id } // стоило бы передавать в ссылке, но усложнит mock-backend
-    })
+  setTicketStatus(ticketId: number, status: boolean) {
+    this.ticketStatus.emit({ ticketId, status });
   }
-
-  reopenTicket(id: number) {
-    this.http.post(`${BACKEND_URL}/${TICKET_REOPEN_PATH}`, { id });
-  }
-
 }

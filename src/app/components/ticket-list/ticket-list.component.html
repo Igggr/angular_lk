@@ -1,4 +1,4 @@
 <div class="card-deck">
-    <app-ticket-card *ngFor="let ticket of tickets" [ticket]="ticket">
+    <app-ticket-card *ngFor="let ticket of tickets" [ticket]="ticket" (ticketStatus)="setTicketStatus($event)">
     </app-ticket-card>
 </div>
