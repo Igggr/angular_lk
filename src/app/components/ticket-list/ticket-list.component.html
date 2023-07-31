@@ -1,1 +1,4 @@
-<p>ticket-list works!</p>
+<div class="card-deck">
+    <app-ticket-card *ngFor="let ticket of tickets" [ticket]="ticket">
+    </app-ticket-card>
+</div>

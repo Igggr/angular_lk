@@ -1,0 +1,53 @@
+@import '../../../colors.scss';
+
+mat-card {
+    margin: 10px;
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+
+    mat-card-header {
+        padding: auto;
+        padding-bottom: 3px;
+        background-color: $primary;
+        color: white;
+
+        mat-card-title-group {
+            display: block;
+            mat-card-subtitle {
+                display: flex;
+                flex-direction: row;
+                color: $accent;
+                justify-content: space-between;
+
+                div {
+                    display: inline-block;
+                }
+                .status {
+                    color: $warn;
+                    left: 0px;
+                    display: inline-block;
+                    align-self: right;
+                    justify-self: end;
+                }
+            }
+        }
+    }
+
+    mat-card-content {
+        flex-grow: 1;
+        overflow: auto;
+    }
+
+    mat-card-actions {
+        display: flex;
+        flex-direction: row;
+
+        button {
+            flex-grow: 1;
+        }
+    }
+}
+
+

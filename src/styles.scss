@@ -28,3 +28,11 @@ body {
     --mdc-snackbar-container-color: #F44A3E;
     --mat-mdc-snack-bar-button-color: white;
 }
+
+div.center {
+    display: flex;
+
+    &>* {
+        margin: auto;
+    }
+}

@@ -1,3 +1,5 @@
+@import '../colors.scss';
+
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -7,15 +9,25 @@ nav ul {
     justify-content: flex-end;
     align-items: flex-end;
     border: 1px solid black;
+
+    li {
+        padding: 5px;
+
+        a {
+            color: white;
+
+            mat-icon {
+                position: relative;
+                top: 5px;
+            }
+        }
+    }
 }
 
-nav ul li {
-    padding: 5px;
-}
 
 .router-wrapper {
     flex-grow: 1;
-    background-color: yellow;
+    background-color: $accent;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,5 +41,5 @@ nav ul li {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: orange;
+    background-color: $primary;
 }

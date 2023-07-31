@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title-group class="full-width">
+            <mat-card-title  class="full-width">{{ticket.title}}</mat-card-title>
+            <mat-card-subtitle class="full-width">
+                <div>обращение № {{ticket.id}}</div>
+                <div class="status">{{ticket.isOpened ? 'active' : 'closed'}}</div>
+            </mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ticket.content}}</p>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-flat-button [disabled]="ticket.isOpened" color="primary"
+            (click)="reopenTicket(ticket.id)">REOPEN</button>
+        <button mat-flat-button [disabled]="!ticket.isOpened" color="warn"
+            (click)="closeTicket(ticket.id)">CLOSE</button>
+    </mat-card-actions>
+</mat-card>

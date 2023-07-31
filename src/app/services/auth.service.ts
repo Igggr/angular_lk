@@ -10,11 +10,11 @@ import { UserInfo } from '../common-types/user';
 export class AuthService {
 
   constructor(
-    private readonly client: HttpClient,
+    private readonly http: HttpClient,
   ) { }
   
   login(username: string, password: string) {
-    return this.client.post<UserInfo>(`${BACKEND_URL}/${LOGIN_PATH}`, {
+    return this.http.post<UserInfo>(`${BACKEND_URL}/${LOGIN_PATH}`, {
       username,
       password,
     }).pipe(
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   register(username: string, password: string) {
-    return this.client.post<UserInfo>(`${BACKEND_URL}/${REGISTRATION_PATH}`, {
+    return this.http.post<UserInfo>(`${BACKEND_URL}/${REGISTRATION_PATH}`, {
       username, password
     })
   }

@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +22,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TicketListComponent } from './components/ticket-list/ticket-list.component';
 import { fakeBackendProvider } from './mock/fake_backend';
 import { ErrorComponent } from './components/error/error.component';
+import { TicketCardComponent } from './components/ticket-card/ticket-card.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ErrorComponent } from './components/error/error.component';
     ProfileComponent,
     TicketListComponent,
     ErrorComponent,
+    TicketCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import { ErrorComponent } from './components/error/error.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatCardModule,
   ],
   providers: [
     fakeBackendProvider,

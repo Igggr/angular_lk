@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
 import { Observable, delay, dematerialize, materialize, of, throwError } from 'rxjs';
-import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH, USER_PATH } from '../const';
+import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH, TICKET_PATH, TICKET_REOPEN_PATH, USER_PATH } from '../const';
 import { User } from '../common-types/user';
+import { Ticket } from '../common-types/ticket';
+import { loremContent, loremTitles } from './lorem';
 
 const usersKey = 'registred-users';
 const users: User[] = JSON.parse(localStorage.getItem(usersKey) ?? '[]');
@@ -20,11 +22,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             case url.endsWith(`/${LOGIN_PATH}`) && method === 'POST':
                 return login();
             
-            case url.endsWith(`/${USER_PATH}`) && method == 'GET':
+            case url.endsWith(`/${USER_PATH}`) && method === 'GET':
                 return getUserInfo();
             
-            case url.endsWith(`/${USER_PATH}`) && method == 'PATCH':
+            case url.endsWith(`/${USER_PATH}`) && method === 'PATCH':
                 return updateUser();
+            
+            case url.endsWith(`/${TICKET_PATH}`) && method === 'DELETE':
+                return closeTicket();
+            
+            case url.endsWith(`${TICKET_REOPEN_PATH}`) && method === 'POST':
+                return reopenTicket();
 
             default:
                 // не перехваченные запросы - действительно обрабатывай
@@ -58,7 +66,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 surname: '',
                 birthDate: '',
                 city: '',
-                tickets: [],
+                tickets: createFakeTickets(),
             }
 
             users.push(user);
@@ -103,6 +111,40 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
         }
 
+        function closeTicket() {
+            console.log(`closing ticket ${body.id}`);
+
+            const user = authenticate(body.jwt);
+            if (!user) {
+                return error('JWT is incorrect');
+            } else {
+                const ticket = user.tickets.find((t) => t.id === body.id);
+                if (!ticket) {
+                    return error('Ошибка, такого тикета нет в БД');
+                }
+                ticket.isOpened = false;
+                localStorage.setItem(usersKey, JSON.stringify(users));
+                return ok(user.tickets);
+            }
+        }
+
+        function reopenTicket() {
+            console.log(`reopenning ticket ${body.id}`);
+
+            const user = authenticate(body.jwt);
+            if (!user) {
+                return error('JWT is incorrect');
+            } else {
+                const ticket = user.tickets.find((t) => t.id === body.id);
+                if (!ticket) {
+                    return error('Ошибка, такого тикета нет в БД');
+                }
+                ticket.isOpened = true;
+                localStorage.setItem(usersKey, JSON.stringify(users));
+                return ok(user.tickets);
+            }
+        }
+
         function withoutPassword(user: User) {
             const { password: _, ...without_password } = user;
             return without_password;
@@ -127,3 +169,33 @@ export const fakeBackendProvider = {
     useClass: FakeBackendInterceptor,
     multi: true
 } as const;
+
+
+function ticketFactory() {
+    let number = 1;
+
+    return function createFakeTicket(): Ticket {
+        return {
+            id: number++,
+            isOpened: Math.random() > 0.3,
+            // в заголовке от 1 до 10 слов
+            title: randomlyCut(choose(loremTitles)),
+            content: randomlyCut(choose(loremContent)),
+        }
+    }
+}
+
+function randomlyCut(content: string): string {
+    const words = content.split(' ');
+    return words.slice(0, 1 + Math.floor(Math.random() * words.length)).join(' ');
+}
+
+function choose<T>(arr: T[]): T {
+    return arr[(Math.floor(Math.random() * arr.length))];
+}
+
+function createFakeTickets(): Ticket[] {
+    const ammount = Math.floor(Math.random() * 40);
+    const factory = ticketFactory();
+    return Array.from({ length: ammount }).map(() => factory());
+}

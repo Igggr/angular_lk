@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { BACKEND_URL, CITIES, CURRENT_USER, USER_PATH } from '../../const';
 import { UserInfo } from '../../common-types/user';
 import { HttpClient } from '@angular/common/http';
+import { Ticket } from 'src/app/common-types/ticket';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit {
   surname = '';
   city = '';
   birthDate = new FormControl(new Date());
-  tickets = [];
+  tickets: Ticket[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -50,5 +51,6 @@ export class ProfileComponent implements OnInit {
     this.surname = user.surname;
     this.city = user.city;
     this.birthDate.setValue(new Date(user.birthDate));
+    this.tickets = user.tickets;
   }
 }

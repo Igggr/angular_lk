@@ -4,6 +4,7 @@ export const LOGIN_PATH = 'login';
 export const LOGOUT_PATH = 'logout'; 
 export const PROFILE_PATH = 'profile';
 export const TICKET_PATH = 'ticket';
+export const TICKET_REOPEN_PATH = 'ticket/reopen';
 export const USER_PATH = 'user';
 
 export const BACKEND_URL = 'localhost:3000';
