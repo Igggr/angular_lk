@@ -13,6 +13,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +25,7 @@ import { TicketListComponent } from './components/ticket-list/ticket-list.compon
 import { fakeBackendProvider } from './mock/fake_backend';
 import { ErrorComponent } from './components/error/error.component';
 import { TicketCardComponent } from './components/ticket-card/ticket-card.component';
+import { TicketStatusPipe } from './pipes/ticket-status.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { TicketCardComponent } from './components/ticket-card/ticket-card.compon
     TicketListComponent,
     ErrorComponent,
     TicketCardComponent,
+    TicketStatusPipe,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,7 @@ import { TicketCardComponent } from './components/ticket-card/ticket-card.compon
     MatNativeDateModule,
     MatSnackBarModule,
     MatCardModule,
+    MatTabsModule,
   ],
   providers: [
     fakeBackendProvider,

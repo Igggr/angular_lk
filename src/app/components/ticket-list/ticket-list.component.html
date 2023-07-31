@@ -1,4 +1,25 @@
-<div class="card-deck">
+<!-- <div class="card-deck">
     <app-ticket-card *ngFor="let ticket of tickets" [ticket]="ticket" (ticketStatus)="setTicketStatus($event)">
     </app-ticket-card>
-</div>
+</div> -->
+
+<mat-tab-group>
+    <mat-tab label="Все">
+        <div class="card-deck">
+            <app-ticket-card *ngFor="let ticket of tickets" [ticket]="ticket" (ticketStatus)="setTicketStatus($event)">
+            </app-ticket-card>
+        </div>
+    </mat-tab>
+    <mat-tab label="Открытые">
+        <div class="card-deck">
+            <app-ticket-card *ngFor="let ticket of tickets | ticketHasStatus: true" [ticket]="ticket" (ticketStatus)="setTicketStatus($event)">
+            </app-ticket-card>
+        </div>
+    </mat-tab>
+    <mat-tab label="Закрытые">
+        <div class="card-deck">
+            <app-ticket-card *ngFor="let ticket of tickets  | ticketHasStatus: false" [ticket]="ticket" (ticketStatus)="setTicketStatus($event)">
+            </app-ticket-card>
+        </div>
+    </mat-tab>
+</mat-tab-group>
