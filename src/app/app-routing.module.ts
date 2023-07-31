@@ -11,19 +11,24 @@ import { LOGIN_PATH, MAIN_PAGE_PATH, PROFILE_PATH, TICKET_PATH } from './const';
 const routes: Routes = [
   {
     path: MAIN_PAGE_PATH,
+    data: { breadcrumb: MAIN_PAGE_PATH},
     component: MainPageComponent,
     canActivate: [authGuard],
   },
   {
-    path: LOGIN_PATH, component: LoginComponent,
+    path: LOGIN_PATH,
+    data: { breadcrumb: LOGIN_PATH },
+    component: LoginComponent,
   },
   {
     path: PROFILE_PATH,
+    data: { breadcrumb: PROFILE_PATH },
     component: ProfileComponent,
     canActivate: [authGuard],
   },
   {
     path: TICKET_PATH,
+    data: { breadcrumb: TICKET_PATH },
     component: TicketListComponent,
     canActivate: [authGuard],
   },

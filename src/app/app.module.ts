@@ -26,6 +26,7 @@ import { fakeBackendProvider } from './mock/fake_backend';
 import { ErrorComponent } from './components/error/error.component';
 import { TicketCardComponent } from './components/ticket-card/ticket-card.component';
 import { TicketStatusPipe } from './pipes/ticket-status.pipe';
+import { BreadcrumbComponent } from './components/bread-crumb/bread-crumb.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TicketStatusPipe } from './pipes/ticket-status.pipe';
     ErrorComponent,
     TicketCardComponent,
     TicketStatusPipe,
+    BreadcrumbComponent,
   ],
   imports: [
     BrowserModule,

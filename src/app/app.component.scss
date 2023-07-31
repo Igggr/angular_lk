@@ -41,5 +41,12 @@ nav ul {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: $primary;
+
+    .navbar {
+        background-color: $primary;
+    }
+
+    app-breadcrumb {
+        background-color: $accent;
+    }
 }
