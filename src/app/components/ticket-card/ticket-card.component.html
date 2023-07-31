@@ -14,8 +14,37 @@
 
     <mat-card-actions>
         <button mat-flat-button [disabled]="ticket.isOpened" color="primary"
-            (click)="setTicketStatus(ticket.id, true)">REOPEN</button>
+            (click)="setTicketStatus(true)">REOPEN</button>
         <button mat-flat-button [disabled]="!ticket.isOpened" color="warn"
-            (click)="setTicketStatus(ticket.id, false)">CLOSE</button>
+            (click)="setTicketStatus(false)">CLOSE</button>
     </mat-card-actions>
+
+    <mat-card-footer>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Отредактировать тикет
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <form class="form">                
+                    <p>
+                        <mat-form-field color="primary" class="full-width">
+                            <mat-label>Заголовок:</mat-label>
+                            <input matInput placeholder="что за пробллема?" [(ngModel)]="ticket.title" name="title">
+                        </mat-form-field>
+                        <mat-form-field color="primary" class="full-width">
+                            <mat-label>Описание проблемы:</mat-label>
+                            <input matInput placeholder="Детальное описание проблемы"
+                                [(ngModel)]="ticket.content" name="content">
+                        </mat-form-field>
+                    </p>
+
+                    <button mat-flat-button class="full-width" color="warn" (click)="updateTicket()">обновить тикет</button>
+
+                </form>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-footer>
 </mat-card>

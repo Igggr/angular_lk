@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
 import { LOGIN_PATH, REGISTRATION_PATH, BACKEND_URL, CURRENT_USER } from '../const';
 import { UserInfo } from '../common-types/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class AuthService {
 
   constructor(
     private readonly http: HttpClient,
+    private readonly router: Router,
   ) { }
   
   login(username: string, password: string) {
@@ -54,6 +56,7 @@ export class AuthService {
   logout() {
     console.log('log out');
     localStorage.removeItem(CURRENT_USER);
+    this.router.navigate([LOGIN_PATH]);
   }
 
   get isAutenticated() {

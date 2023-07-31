@@ -25,11 +25,9 @@ export class TicketListComponent implements OnInit {
     this.jwt = currentUser.jwt;
   }
 
-  setTicketStatus(event: { ticketId: number, status: boolean }) {
-    console.log(`set ticket # ${event.ticketId} status as ${event.status ? 'open' : 'closed'}`)
+  ticketUpdate(event: Ticket) {
     this.http.put<Ticket[]>(`${BACKEND_URL}/${TICKET_PATH}`, {
-      id: event.ticketId,
-      status: event.status,
+      ticket: event,
       jwt: this.jwt
     }).subscribe({
       next: (data) => {

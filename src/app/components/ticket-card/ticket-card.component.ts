@@ -8,9 +8,13 @@ import { Ticket } from 'src/app/common-types/ticket';
 })
 export class TicketCardComponent {
   @Input() ticket!: Ticket;
-  @Output() ticketStatus = new EventEmitter();
+  @Output() ticketUpdate = new EventEmitter();
 
-  setTicketStatus(ticketId: number, status: boolean) {
-    this.ticketStatus.emit({ ticketId, status });
+  setTicketStatus(status: boolean) {
+    this.ticketUpdate.emit({ ...this.ticket, isOpened: status });
+  }
+
+  updateTicket() {
+    this.ticketUpdate.emit(this.ticket);
   }
 }

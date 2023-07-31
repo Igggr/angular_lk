@@ -14,7 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,6 +56,7 @@ import { TicketStatusPipe } from './pipes/ticket-status.pipe';
     MatSnackBarModule,
     MatCardModule,
     MatTabsModule,
+    MatExpansionModule,
   ],
   providers: [
     fakeBackendProvider,

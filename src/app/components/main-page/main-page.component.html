@@ -1,3 +1,6 @@
 <div class="center">
-    <h1>main-page works!</h1>
+    <div>
+    <h2>У вас есть {{tickets.length}} <a href="/ticket">тикетов</a></h2>
+    <h2>{{(tickets | ticketHasStatus:true).length}} открытых и {{(tickets | ticketHasStatus:false).length}} закрытых</h2>
+    </div>
 </div>

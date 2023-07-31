@@ -5,6 +5,7 @@ import { LOGIN_ERROR, LOGIN_PATH, REGISTRATION_PATH, TICKET_PATH, USER_PATH } fr
 import { User } from '../common-types/user';
 import { Ticket } from '../common-types/ticket';
 import { loremContent, loremTitles } from './lorem';
+import { tick } from '@angular/core/testing';
 
 const usersKey = 'registred-users';
 const users: User[] = JSON.parse(localStorage.getItem(usersKey) ?? '[]');
@@ -43,7 +44,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return updateUser();
             
             case url.endsWith(`/${TICKET_PATH}`) && method === 'PUT':
-                return setTicketStatus();
+                return updateTicket();
             
 
             default:
@@ -123,18 +124,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
         }
 
-        function setTicketStatus() {
-            console.log(`closing ticket ${body.id}`);
+        function updateTicket() {
+            console.log(`updating ticket ${body.ticket.id}`, body);
 
             const user = authenticate(body.jwt);
             if (!user) {
                 return error('JWT is incorrect');
             } else {
-                const ticket = user.tickets.find((t) => t.id === body.id);
+                const ticket = user.tickets.find((t) => t.id === body.ticket.id);
                 if (!ticket) {
                     return error('Ошибка, такого тикета нет в БД');
                 }
-                ticket.isOpened = body.status;
+                ticket.isOpened = body.ticket.isOpened;
+                ticket.title = body.ticket.title;
+                ticket.content = body.ticket.content;
+            
                 localStorage.setItem(usersKey, JSON.stringify(users));
                 localStorage.setItem('current_user', JSON.stringify(user));
                 return ok(user.tickets);
